@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<meta charset=utf-8>
+<head>
+<title>jQuery Resize Plugin Demo</title>
+<!--
+<link href="http://www.jqueryscript.net/css/top.css" rel="stylesheet" type="text/css">-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script src="../js/jquery.min.js"></script>		
+<script src="../js/jquery.Jcrop.js"></script>
+
+<script src="../src/jquery.ae.image.resize.js"></script>
+
+<script type="text/javascript">
+
+	/* jcrop when page loads */
+	var jcrop_api;
+
+	function initJcrop(oImg){
+	        oImg.Jcrop({},function(){
+	           jcrop_api = this;
+	           jcrop_api.animateTo([100,100,400,300]);
+
+	           console.log("width0: " + 0  + " height0: " + 0 );
+	        });
+	    };     
+
+	jQuery(function(jQuery){
+	    initJcrop(jQuery('#jcrop_target'));
+
+	    console.log("width1: " + 1 + " height1: " + 1);
+
+	});
+
+	/* box number when page loads */
+	function showCoords(c){
+	    jQuery('#w').val(c.w);
+	    jQuery('#h').val(c.h);
+
+	    console.log("width2: " + w + " height2: " + h);
+
+	    //initJcrop(jQuery('.update-size'))
+	};
+
+	//Resize image when clik button 
+    $(function() {
+    	$('#btn2').click(function(){
+
+    	//alert("Vas a cambiar el tamaño de la imagen, ¿ estas seguro ?");  
+
+    	var ancho = jQuery('#w').val();   //coge4mos valor w de la caja
+        var altura = jQuery('#h').val();  //coge4mos valor h de la caja
+      $( ".resizeme" ).aeImageResize({ height: altura, width: ancho });
+
+      })
+    });
+
+    // Resize crop when click button 
+	$(function(){
+	    $('#btn1').click(function() {
+	        
+	      //  alert("El crop va a cambiar ");//alerta pantalla (usuario)
+
+	        var ancho = jQuery('#w').val();		//cogemos valor w de la caja
+	        var altura = jQuery('#h').val();	//cogemos valor h de la caja
+
+	        jQuery('.jcrop-holder > div:nth-child(1)').css('height', altura);
+	        jQuery('.jcrop-holder > div:nth-child(1)').css('width', ancho);
+
+	        jcrop_api.setSelect([0,0,ancho,altura]);
+
+	        console.log("width5: " + ancho + " height5: " + altura);
+	    });
+	});
+
+  </script>
+  <link rel="stylesheet" href="demo_files/main.css" type="text/css" />
+  <link rel="stylesheet" href="demo_files/demos.css" type="text/css" />
+  <link rel="stylesheet" href="../css/jquery.Jcrop.css" type="text/css" />
+  <style type="text/css">
+
+	/* Apply these styles only when #preview-pane has
+	   been placed within the Jcrop widget */
+	.jcrop-holder #preview-pane {
+	  overflow: scroll;
+	  position: static;
+	  margin-left: auto;
+	  margin-right: auto;
+	  vertical-align: middle;
+	  z-index: 2000;
+	  top: 10px;
+	  right: -280px;
+	  padding: 6px;
+	  border: 1px rgba(0,0,0,.4) solid;
+	  background-color: white;
+
+	  -webkit-border-radius: 6px;
+	  -moz-border-radius: 6px;
+	  border-radius: 6px;
+
+	  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	  
+	}
+
+	/* The Javascript code will set the aspect ratio of the crop
+	   area based on the size of the thumbnail preview,
+	   specified here */
+	#preview-pane .preview-container {
+	  position: static;
+	  width: 250px;
+	  height: 170px;
+	  overflow: auto;
+	}
+
+</style>
+</head>
+<body>
+  <div id="menu">
+	<div class="w">
+		<div class="container ">
+		<div class="row ">
+		<div class="span12">
+		<div class="jc-demo-box">
+
+		<div class="page-header">
+		<h1>Image Resizer </h1>
+		</div>
+		 <tr align= "row-center">
+		 <img src="./sample1.jpg"  height=300  width=400 id="jcrop_target" >
+		 <img src="./sample1.jpg" class="resizeme" >
+		 </tr>
+		  <div>
+		    <p>Define las dimensiones de la imagen:</p>
+		     <button type="button" id="btn2" > Redimensionar Imagen </button>
+		     <button type="button" id="btn1" > Redimensionar Crop </button>
+		    <form>
+		        <label>Width: <input type="text" size="4" id="w" name="w" value="360"></label>
+		        <label>Height: <input type="text" size="4" id="h" name="h" value="360"></label>
+		       
+		    </form>
+		  </div>
+		</div>
+		</div>
+		</div>
+		</div>
+	</div>
+  </div>
+</body>
+</html>
+
